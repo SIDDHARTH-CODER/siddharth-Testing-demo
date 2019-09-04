@@ -1,0 +1,881 @@
+{
+	"info": {
+		"_postman_id": "830ec24f-7384-4df0-aad1-f3676802b94c",
+		"name": "SISAl RMS API'S",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token Resources : Token Controller",
+			"item": [
+				{
+					"name": "GET OAUTH TOKEN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56d20905-8a6f-44e9-acc2-62076aed1941",
+								"exec": [
+									"//get Token use JSON.PARSE",
+									"",
+									"var TokenData = JSON.parse(responseBody);",
+									"var Value = TokenData.responseData.authToken;",
+									"console.log(Value);",
+									"pm.environment.set(\"Token\", Value);",
+									"",
+									"//schema validation",
+									"",
+									"var schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-06/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"required\": [",
+									"    \"responseCode\",",
+									"    \"responseMessage\",",
+									"    \"responseData\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"responseCode\": {",
+									"      \"$id\": \"#/properties/responseCode\",",
+									"      \"type\": \"number\"",
+									"    },",
+									"    \"responseMessage\": {",
+									"      \"$id\": \"#/properties/responseMessage\",",
+									"      \"type\": \"string\",",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"responseData\": {",
+									"      \"$id\": \"#/properties/responseData\",",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"        \"message\",",
+									"        \"statusCode\",",
+									"        \"authToken\",",
+									"        \"timestamp\",",
+									"        \"expiryTime\",",
+									"        \"issueAt\",",
+									"        \"userId\"",
+									"      ],",
+									"      \"properties\": {",
+									"        \"message\": {",
+									"          \"$id\": \"#/properties/responseData/properties/message\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"statusCode\": {",
+									"          \"$id\": \"#/properties/responseData/properties/statusCode\",",
+									"          \"type\": \"number\"",
+									"        },",
+									"        \"authToken\": {",
+									"          \"$id\": \"#/properties/responseData/properties/authToken\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"timestamp\": {",
+									"          \"$id\": \"#/properties/responseData/properties/timestamp\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"expiryTime\": {",
+									"          \"$id\": \"#/properties/responseData/properties/expiryTime\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"issueAt\": {",
+									"          \"$id\": \"#/properties/responseData/properties/issueAt\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"userId\": {",
+									"          \"$id\": \"#/properties/responseData/properties/userId\",",
+									"          \"type\": \"number\"",
+									"        }",
+									"      }",
+									"    }",
+									"  }",
+									"};",
+									"",
+									"//TEST CASE-5, for Schema Validation.",
+									"pm.test('TEST CASE-5, Schema is valid', function()",
+									"{",
+									"var jsonData = pm.response.json();",
+									"  var result= pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+									"});",
+									"",
+									"/*TEST CASE-2, for Header Content-Type",
+									"",
+									"pm.test(\"TEST CASE-2, Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});*/",
+									"",
+									"",
+									"// TEST CASE-6, For Json Value validation.",
+									" var jsonData = pm.response.json();",
+									"  pm.test(\"TEST CASE-6 for Match Json Value=====\"+jsonData.responseData.message, function () {",
+									"   pm.expect(jsonData.responseData.message).to.eql(\"Success\");",
+									"}); ",
+									"",
+									"//TEST CASE-7, match for string",
+									"tests[\"TEST CASE-7, responseCode is present\"] = responseBody.has(\"responseCode\");",
+									"tests[\"TEST CASE-7, responseMessage is present\"] = responseBody.has(\"responseMessage\");",
+									"tests[\"TEST CASE-7, responseData is present\"] = responseBody.has(\"responseData\");",
+									"tests[\"TEST CASE-7, message is present\"] = responseBody.has(\"message\");",
+									"tests[\"TEST CASE-7, statusCode is present\"] = responseBody.has(\"statusCode\");",
+									"tests[\"TEST CASE-7, authToken is present\"] = responseBody.has(\"authToken\");",
+									"tests[\"TEST CASE-7, timestamp is present\"] = responseBody.has(\"timestamp\");",
+									"tests[\"TEST CASE-7, expiryTime is present\"] = responseBody.has(\"expiryTime\");",
+									"tests[\"TEST CASE-7, issueAt is present\"] = responseBody.has(\"issueAt\");",
+									"tests[\"TEST CASE-7, userId is present\"] = responseBody.has(\"userId\");",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4b3fc280-bc88-4f1a-8b7d-e36bd53b6f0f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": " application/json",
+								"type": "text"
+							},
+							{
+								"key": "userName",
+								"value": "APIR",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "12121212",
+								"type": "text"
+							},
+							{
+								"key": "clientId",
+								"value": " RMS",
+								"type": "text"
+							},
+							{
+								"key": "clientSecret",
+								"value": " ph2Nj5knd4IjWBVLc4mhmYHo1hQDEdS3FlIC2KskHpeHFhsqxD",
+								"type": "text"
+							}
+						],
+						"url": "{{BaseUrl}}/RMS/get/token"
+					},
+					"response": [
+						{
+							"name": "GET OAUTH TOKEN",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": " application/json",
+										"type": "text"
+									},
+									{
+										"key": "userName",
+										"value": " vivek",
+										"type": "text"
+									},
+									{
+										"key": "password",
+										"value": " 12121212",
+										"type": "text"
+									},
+									{
+										"key": "clientId",
+										"value": " RMS",
+										"type": "text"
+									},
+									{
+										"key": "clientSecret",
+										"value": " ph2Nj5knd4IjWBVLc4mhmYHo1hQDEdS3FlIC2KskHpeHFhsqxD",
+										"type": "text"
+									}
+								],
+								"url": "http://192.168.134.210:8081/RMS/get/token"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 26 Aug 2019 12:52:19 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": 0,\n    \"responseMessage\": \"Success\",\n    \"responseData\": {\n        \"message\": \"Success\",\n        \"statusCode\": 0,\n        \"authToken\": \"o_OxC772NQhyGINLTcrIbUO6WdhAjBY6cWnN7CY0SFc\",\n        \"timestamp\": \"2019-08-26T18:22:19\",\n        \"expiryTime\": \"Mon Aug 26 20:22:19 IST 2019\",\n        \"issueAt\": \"Mon Aug 26 18:22:19 IST 2019\",\n        \"userId\": 20\n    }\n}"
+						},
+						{
+							"name": "Get token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "userName",
+										"value": "Hrishabh",
+										"type": "text"
+									},
+									{
+										"key": "password",
+										"value": "12121212",
+										"type": "text"
+									},
+									{
+										"key": "clientId",
+										"value": "RMS",
+										"type": "text"
+									},
+									{
+										"key": "clientSecret",
+										"value": "ph2Nj5knd4IjWBVLc4mhmYHo1hQDEdS3FlIC2KskHpeHFhsqxD",
+										"type": "text"
+									}
+								],
+								"url": "http://192.168.134.210:8081/RMS/get/token"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 20 Aug 2019 09:19:27 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseCode\": 0,\n    \"responseMessage\": \"Success\",\n    \"responseData\": {\n        \"message\": \"Success\",\n        \"statusCode\": 0,\n        \"authToken\": \"SSrQcITWTBemkrQaL6KvMF9hbGbma02jYwOblFTceAU\",\n        \"timestamp\": \"2019-08-20T14:49:28\",\n        \"expiryTime\": \"Tue Aug 20 16:49:28 IST 2019\",\n        \"issueAt\": \"Tue Aug 20 14:49:28 IST 2019\",\n        \"userId\": 165\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "GET /get/clientToken\nGET CLIENT OAUTH TOKEN.\n\nGET /get/token\nGET OAUTH TOKEN.\n\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d9fd9c2b-57b3-42ab-9278-ed070b9fb3d2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "13b58dd9-7120-4852-ac2e-d148ac31af45",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User Management : User Management APIs",
+			"item": [
+				{
+					"name": "CAN GET LOGIN DATA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f86c84b7-b4bd-48dd-a122-77605b588214",
+								"exec": [
+									"// LoginName Varibale for CAN CHECK LOGIN UNIQUENESS API",
+									"",
+									"var loginName = JSON.parse(responseBody);",
+									"var Value = loginName.responseData.data.username;",
+									"console.log(Value);",
+									"pm.environment.set(\"loginName\", Value);",
+									"",
+									"//SCHEMA VALIDATION ",
+									"",
+									"var schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-06/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"responseCode\": {",
+									"      \"$id\": \"#/properties/responseCode\",",
+									"      \"type\": \"number\"",
+									"    },",
+									"    \"responseMessage\": {",
+									"      \"$id\": \"#/properties/responseMessage\",",
+									"      \"type\": \"string\",",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"responseData\": {",
+									"      \"$id\": \"#/properties/responseData\",",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"message\": {",
+									"          \"$id\": \"#/properties/responseData/properties/message\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"statusCode\": {",
+									"          \"$id\": \"#/properties/responseData/properties/statusCode\",",
+									"          \"type\": \"number\"",
+									"        },",
+									"        \"data\": {",
+									"          \"$id\": \"#/properties/responseData/properties/data\",",
+									"          \"type\": \"object\",",
+									"          \"properties\": {",
+									"            \"lastName\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/lastName\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"orgTypeCode\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/orgTypeCode\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"orgName\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/orgName\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"userStatus\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/userStatus\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"walletType\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/walletType\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"isHead\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/isHead\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"userId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/userId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"orgId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/orgId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"domainId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/domainId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"walletMode\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/walletMode\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"orgStatus\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/orgStatus\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"firstName\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/firstName\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"accessSelfDomainOnly\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/accessSelfDomainOnly\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"regionBinding\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/regionBinding\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"balance\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/balance\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"orgCode\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/orgCode\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"parentAgtOrgId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/parentAgtOrgId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"rawUserBalance\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/rawUserBalance\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"parentMagtOrgId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/parentMagtOrgId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"creditLimit\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/creditLimit\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"userBalance\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/userBalance\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            },",
+									"            \"parentSagtOrgId\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/parentSagtOrgId\",",
+									"              \"type\": \"number\"",
+									"            },",
+									"            \"username\": {",
+									"              \"$id\": \"#/properties/responseData/properties/data/properties/username\",",
+									"              \"type\": \"string\",",
+									"              \"pattern\": \"^(.*)$\"",
+									"            }",
+									"          }",
+									"        }",
+									"      }",
+									"    }",
+									"  }",
+									"};",
+									" ",
+									" //TEST CASE-5, for Schema Validation.",
+									"pm.test('TEST CASE-5, Schema is valid', function()",
+									"{",
+									"var jsonData = pm.response.json();",
+									"  var result= pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+									"});",
+									"",
+									"",
+									"// TEST CASE-6, For Json Value validation.",
+									" var jsonData = pm.response.json();",
+									"  pm.test(\"TEST CASE-6 for Match Json Value=====\"+jsonData.responseData.message, function () {",
+									"   pm.expect(jsonData.responseData.message).to.eql(\"Success\");",
+									"}); ",
+									"",
+									"//TEST CASE-7, match for string",
+									"tests[\"TEST CASE-7, responseCode is present\"] = responseBody.has(\"responseCode\");",
+									"tests[\"TEST CASE-7, responseMessage is present\"] = responseBody.has(\"responseMessage\");",
+									"tests[\"TEST CASE-7, responseData is present\"] = responseBody.has(\"responseData\");",
+									"tests[\"TEST CASE-7, message is present\"] = responseBody.has(\"message\");",
+									"tests[\"TEST CASE-7, statusCode is present\"] = responseBody.has(\"statusCode\");",
+									"tests[\"TEST CASE-7, data is present\"] = responseBody.has(\"data\");",
+									"tests[\"TEST CASE-7, lastName is present\"] = responseBody.has(\"lastName\");",
+									"tests[\"TEST CASE-7, orgTypeCode is present\"]= responseBody.has(\"orgTypeCode\");",
+									"tests[\"TEST CASE-7, orgName is present\"] = responseBody.has(\"orgName\");",
+									"tests[\"TEST CASE-7, userStatus is present\"] = responseBody.has(\"userStatus\");",
+									"tests[\"TEST CASE-7, walletType is present\"] = responseBody.has(\"walletType\");",
+									"tests[\"TEST CASE-7, isHead is present\"] = responseBody.has(\"isHead\");",
+									"tests[\"TEST CASE-7, userId is present\"] = responseBody.has(\"userId\");",
+									"tests[\"TEST CASE-7, orgId is present\"] = responseBody.has(\"orgId\");",
+									"tests[\"TEST CASE-7, domainId is present\"] = responseBody.has(\"domainId\");",
+									"tests[\"TEST CASE-7, orgStatus is present\"] = responseBody.has(\"orgStatus\");",
+									"tests[\"TEST CASE-7, firstName is present\"] = responseBody.has(\"firstName\");",
+									"tests[\"TEST CASE-7, accessSelfDomainOnly is present\"] = responseBody.has(\"accessSelfDomainOnly\");",
+									"tests[\"TEST CASE-7, regionBinding is present\"] = responseBody.has(\"regionBinding\");",
+									"tests[\"TEST CASE-7, balance is present\"] = responseBody.has(\"balance\");",
+									"tests[\"TEST CASE-7, orgCode is present\"] = responseBody.has(\"orgCode\");",
+									"tests[\"TEST CASE-7, parentAgtOrgId is present\"] = responseBody.has(\"parentAgtOrgId\");",
+									"tests[\"TEST CASE-7, rawUserBalance is present\"] = responseBody.has(\"rawUserBalance\");",
+									"tests[\"TEST CASE-7, creditLimit is present\"] = responseBody.has(\"creditLimit\");",
+									"tests[\"TEST CASE-7, userBalance is present\"] = responseBody.has(\"userBalance\");",
+									"tests[\"TEST CASE-7, parentSagtOrgId is present\"] = responseBody.has(\"parentSagtOrgId\");",
+									"tests[\"TEST CASE-7, username is present\"] = responseBody.has(\"username\");",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, */*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer  {{Token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/RMS/v1.0/getLoginData?languageCode=en&appType=Web_Panel",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"RMS",
+								"v1.0",
+								"getLoginData"
+							],
+							"query": [
+								{
+									"key": "languageCode",
+									"value": "en"
+								},
+								{
+									"key": "appType",
+									"value": "Web_Panel"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CAN CHECK LOGIN UNIQUENESS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4b9c9c8-c9ad-47bc-b4b4-f942841840a8",
+								"exec": [
+									"var schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-06/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"required\": [",
+									"    \"responseCode\",",
+									"    \"responseMessage\",",
+									"    \"responseData\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"responseCode\": {",
+									"      \"$id\": \"#/properties/responseCode\",",
+									"      \"type\": \"number\"",
+									"    },",
+									"    \"responseMessage\": {",
+									"      \"$id\": \"#/properties/responseMessage\",",
+									"      \"type\": \"string\",",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"responseData\": {",
+									"      \"$id\": \"#/properties/responseData\",",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"        \"message\",",
+									"        \"statusCode\",",
+									"        \"data\"",
+									"      ],",
+									"      \"properties\": {",
+									"        \"message\": {",
+									"          \"$id\": \"#/properties/responseData/properties/message\",",
+									"          \"type\": \"string\",",
+									"          \"pattern\": \"^(.*)$\"",
+									"        },",
+									"        \"statusCode\": {",
+									"          \"$id\": \"#/properties/responseData/properties/statusCode\",",
+									"          \"type\": \"number\"",
+									"        },",
+									"        \"data\": {",
+									"          \"$id\": \"#/properties/responseData/properties/data\",",
+									"          \"type\": \"boolean\"",
+									"        }",
+									"      }",
+									"    }",
+									"  }",
+									"}",
+									"//TEST CASE-5, for Schema Validation.",
+									"pm.test('TEST CASE-5, Schema is valid', function()",
+									"{",
+									"var jsonData = pm.response.json();",
+									"  var result= pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+									"});",
+									"",
+									"",
+									"// TEST CASE-6, For Json Value validation.",
+									" var jsonData = pm.response.json();",
+									"  pm.test(\"TEST CASE-6 for Match Json Value=====\"+jsonData.responseData.message, function () {",
+									"   pm.expect(jsonData.responseData.message).to.eql(\"Success\");",
+									"}); ",
+									"",
+									"",
+									"//TEST CASE-7, match for string",
+									"tests[\"TEST CASE-7, responseCode is present\"] = responseBody.has(\"responseCode\");",
+									"tests[\"TEST CASE-7, responseMessage is present\"] = responseBody.has(\"responseMessage\");",
+									"tests[\"TEST CASE-7, responseData is present\"] = responseBody.has(\"responseData\");",
+									"tests[\"TEST CASE-7, message is present\"] = responseBody.has(\"message\");",
+									"tests[\"TEST CASE-7, statusCode is present\"] = responseBody.has(\"statusCode\");",
+									"tests[\"TEST CASE-7, data is present\"] = responseBody.has(\"data\");",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/RMS/v1.0/checkLoginName?loginName={{loginName}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"RMS",
+								"v1.0",
+								"checkLoginName"
+							],
+							"query": [
+								{
+									"key": "loginName",
+									"value": "{{loginName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CAN DO USER REGISTRATION",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98022b64-d2fa-48c8-af7d-450143510c27",
+								"exec": [
+									"// TEST CASE-6, For Json Value validation.",
+									" var jsonData = pm.response.json();",
+									"  pm.test(\"TEST CASE-6 for Match Json Value=====\"+jsonData.responseData.message, function () {",
+									"   pm.expect(jsonData.responseData.message).to.eql(\"Success\");",
+									"}); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer XXXX",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"addressOne\": \"Address one\",\n  \"addressTwo\": \"Address one\",\n  \"altMobileNumber\": \"+918574565435\",\n  \"cityCode\": \"US-TX-FW\",\n  \"contactPerson\": \"Contact Person\",\n  \"countryCode\": \"US\",\n  \"domainId\": 1,\n  \"emailId\": \"Adress1@gmail.com\",\n  \"firstName\": \"First Name\",\n  \"lastName\": \"Last Name\",\n  \"middleName\": \"Middle name\",\n  \"mobileNumber\": \"+919574565435\",\n  \"orgId\": 1,\n  \"regionIds\": [\n    2\n  ],\n  \"roleId\": 42,\n  \"stateCode\": \"US-TX\",\n  \"userName\": \"APIR\",\n  \"warehouseId\": 10,\n  \"zipCode\": \"123464\"\n}"
+						},
+						"url": "{{BaseUrl}}/RMS/v1.0/doUserRegistration"
+					},
+					"response": []
+				}
+			],
+			"description": "GET /v1.0/blockUser\nBlock User\n\nPOST /v1.0/changePassword\nChange Password API\n\nGET /v1.0/checkLoginName\nCAN CHECK LOGIN UNIQUENESS\n\nPOST /v1.0/doUserRegistration\nCAN DO USER REGISTRATION\n\nPOST /v1.0/doUserSearch\nUser Search API\n\nGET /v1.0/getLoginData\nCAN GET LOGIN DATA\n\nGET /v1.0/getUserAccessDetails\nCan Fetch User Access Details\n\nGET /v1.0/getUserDetails\nFetch Org. Details\n\nGET /v1.0/getUsersByRole\nFetch User By Role\n\nGET /v1.0/logOut\nLogout API\n\nPOST /v1.0/subuser/doUserRegistration\nCAN DO USER REGISTRATION\n\nGET /v1.0/unblockUser\nUnblock User\n\nPOST /v1.0/updateUserAccessDetails\nCan Update User Access Details\n\nPOST /v1.0/updateUserDetails\nUpdate User Details",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5a348453-336f-44eb-9b41-cbe4e6a62aa5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d18fe0a3-d972-4399-aa52-76908e38edc2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c36f4352-50d8-48af-a247-9b98bc537a2d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2c347580-6e89-4690-951f-03c947447f15",
+				"type": "text/javascript",
+				"exec": [
+					"//TEST CASE-1, for Header Content-Type",
+					"",
+					"pm.test(\"GLobal TEST CASE-1,Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"//TEST CASE-2, for Header Content-Type",
+					"",
+					"pm.test(\"Global TEST CASE-2, Content-Type is present\", function () {",
+					"    pm.response.to.have.header(\"Content-Type\");",
+					"});",
+					"",
+					"//TEST CASE-3, for Header Content-Type",
+					"pm.test(\"Global Test Case-3 Response time is less than 200ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(300);",
+					"}); ",
+					"",
+					"/*TEST CASE-4, for Header Content-Type",
+					"pm.test(\"Global Test Case-4 Successful POST request\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+					"});*/"
+				]
+			}
+		}
+	]
+}
